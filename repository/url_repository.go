@@ -8,6 +8,7 @@ import (
 type URLRepository interface {
 	Create(id int64, longURL, code string) (time.Time, error)
 	Get(code string) (string, error)
+	IncrementClickCount(code string) error
 }
 
 type urlRepository struct {
@@ -38,4 +39,12 @@ func (u *urlRepository) Get(code string) (string, error) {
 	).Scan(&longURL)
 
 	return longURL, err
+}
+
+func (u *urlRepository) IncrementClickCount(code string) error {
+	_, err := u.DB.Exec(
+		"UPDATE urls SET clicks = clicks + 1 WHERE short_code=$1",
+		code,
+	)
+	return err
 }

@@ -54,5 +54,17 @@ func (s *urlService) ShortenURL(longURL string) (*model.URLResponse, error) {
 }
 
 func (s *urlService) GetURL(code string) (string, error) {
-	return s.repo.Get(code)
+	// Get the long URL
+	longURL, err := s.repo.Get(code)
+	if err != nil {
+		return "", err
+	}
+
+	// Increment click count
+	if err := s.repo.IncrementClickCount(code); err != nil {
+		// Log error but don't fail the redirect
+		fmt.Printf("failed to increment click count: %v\n", err)
+	}
+
+	return longURL, nil
 }
