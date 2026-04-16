@@ -9,7 +9,7 @@ import (
 )
 
 type URLService interface {
-	ShortenURL(longURL string) (*model.URLResponse, error)
+	ShortenURL(longURL string) (*model.URLShortenResponse, error)
 	GetURL(code string) (string, error)
 }
 
@@ -25,7 +25,7 @@ func NewURLService(r repository.URLRepository, baseURL string) URLService {
 	}
 }
 
-func (s *urlService) ShortenURL(longURL string) (*model.URLResponse, error) {
+func (s *urlService) ShortenURL(longURL string) (*model.URLShortenResponse, error) {
 	// Validate URL format and protocol
 	if err := utils.ValidateURL(longURL); err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func (s *urlService) ShortenURL(longURL string) (*model.URLResponse, error) {
 	// Generate full short URL with domain prefix
 	shortURL := fmt.Sprintf("%s/r/%s", s.baseURL, code)
 
-	return &model.URLResponse{
+	return &model.URLShortenResponse{
 		LongURL:   longURL,
 		ShortURL:  shortURL,
 		CreatedAt: createdAt.Format("2006-01-02T15:04:05Z07:00"),

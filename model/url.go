@@ -4,7 +4,7 @@ type URLShortenRequest struct {
 	URL string `json:"url"`
 }
 
-type URLResponse struct {
+type URLShortenResponse struct {
 	LongURL    string `json:"long_url"`
 	ShortURL   string `json:"short_url"`
 	CreatedAt  string `json:"created_at"`
