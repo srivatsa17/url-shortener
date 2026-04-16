@@ -1,6 +1,6 @@
 # URL Shortener
 
-A high-performance URL shortening service built with Go. Convert long URLs into compact, shareable short codes with analytics tracking.
+A simple URL shortening service built with Go. Convert long URLs into compact, shareable short codes with analytics tracking.
 
 ## 🚀 Features
 
